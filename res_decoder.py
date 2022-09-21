@@ -5,13 +5,11 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
-# from ..transforms._presets import ImageClassification
-# from ..utils import _log_api_usage_once
-# from ._api import register_model, Weights, WeightsEnum
-# from ._meta import _IMAGENET_CATEGORIES
-# from ._utils import _ovewrite_named_param, handle_legacy_interface
 from torchsummary import summary
 
+'''
+Modified from https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py
+'''
 
 def conv3x3(in_planes: int, out_planes: int, stride: int = 1, groups: int = 1, dilation: int = 1, output_padding: int = 0) -> nn.Conv2d:
     """3x3 convolution with padding"""
@@ -126,8 +124,6 @@ class ResNet(nn.Module):
         self.layer1 = self._make_layer(block, 64, layers[0], output_padding = 0, last_block_dim=64)
 
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        # self.fc = nn.Linear(512 * block.expansion, num_classes)
-        # self.indices = indices
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):

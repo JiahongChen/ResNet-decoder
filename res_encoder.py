@@ -7,6 +7,10 @@ from torch import Tensor
 
 from torchsummary import summary
 
+'''
+Modified from https://github.com/pytorch/vision/blob/main/torchvision/models/resnet.py
+'''
+
 def conv3x3(in_planes: int, out_planes: int, stride: int = 1, groups: int = 1, dilation: int = 1) -> nn.Conv2d:
     """3x3 convolution with padding"""
     return nn.Conv2d(
@@ -202,8 +206,6 @@ class ResNet(nn.Module):
         x = self.layer4(x)
 
         x = self.avgpool(x)
-        # x = torch.flatten(x, 1)
-        # x = self.fc(x)
 
         if self.return_indices:
             return x, indices
